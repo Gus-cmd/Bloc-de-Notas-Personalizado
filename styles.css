@@ -1,0 +1,155 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 20px;
+  min-height: 100vh;
+  font-family: 'Arial', sans-serif;
+  position: relative;
+  overflow-x: hidden;
+  background-color: #000;
+}
+
+/* Fondo del universo - posición fixed pero con scroll permitido */
+.universe-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000
+    url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')
+    no-repeat center center;
+  background-size: cover;
+  z-index: -2;
+  animation: panBackground 60s infinite linear;
+}
+
+/* Overlay con blur - también fixed */
+.blur-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  z-index: -1;
+}
+
+/* Contenedor principal - permite scroll en toda la página */
+.notepad-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  color: white;
+  position: relative;
+  min-height: calc(100vh - 40px); /* 40px = padding top+bottom del body */
+}
+
+/* Área de texto con scroll interno */
+.notepad {
+  width: 100%;
+  min-height: 300px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 16px;
+  resize: none;
+  outline: none;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  overflow-y: auto; /* Scroll vertical cuando sea necesario */
+
+  /* Mejoras para mobile */
+  -webkit-overflow-scrolling: touch; /* Scroll suave en iOS */
+  max-height: 70vh; /* Limita la altura en desktop */
+}
+
+/* Título responsivo */
+.title {
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  margin-bottom: 20px;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+/* Visualización de hora */
+.time-display {
+  text-align: right;
+  margin-top: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: clamp(12px, 3vw, 14px);
+}
+
+/* Media Queries para móvil */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  .notepad-container {
+    padding: 15px;
+    min-height: calc(100vh - 20px); /* Ajuste para el padding reducido */
+  }
+
+  .notepad {
+    padding: 15px;
+    max-height: none; /* Permite que crezca en móvil */
+    min-height: 60vh;
+    font-size: 14px;
+  }
+}
+
+/* Pequeños ajustes para móviles muy pequeños */
+@media (max-width: 480px) {
+  .notepad {
+    padding: 12px;
+    min-height: 50vh;
+  }
+}
+
+/* Animación de fondo */
+@keyframes panBackground {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+/* Estilos para las estrellas (se mantienen igual) */
+.shooting-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 10px 2px white;
+  animation: shooting 3s linear infinite;
+  opacity: 0;
+}
+
+@keyframes shooting {
+  0% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(100vw, 50vh);
+    opacity: 0;
+  }
+}
